@@ -63,6 +63,13 @@ else
     cat /target/root/.ssh/authorized_keys.wget >>/target/root/.ssh/authorized_keys
     rm -f /target/root/.ssh/authorized_keys.wget
 fi
+
+# Make the kernel wait for the root device to come up on boot.
+# This prevents the boot process from timing if the root device takes a long
+# time to become available (e.g. root volumes on SAS RAID controllers)
+chroot /target sed -i 's/\(GRUB_CMDLINE_LINUX=".*\)\("\)/\1 rootwait\2/' /etc/default/grub
+chroot /target update-grub
+
 sync
 sync
 
