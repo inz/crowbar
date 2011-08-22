@@ -147,12 +147,12 @@ EOF
     ln -s /install_system.sh /etc/rc3.d/S99install
     ln -s /install_system.sh /etc/rc5.d/S99install
     ln -s /install_system.sh /etc/rc2.d/S99install
-    
+
 fi
 
 
 # Make the kernel wait for the root device to come up on boot.
 # This prevents the boot process from timing if the root device takes a long
 # time to become available (e.g. root volumes on SAS RAID controllers)
-sed -i 's/\(GRUB_CMDLINE_LINUX=".*\)\("\)/\1 rootwait\2/' /etc/default/grub
+sed -i 's/\(GRUB_CMDLINE_LINUX=".*\)\("\)/\1 rootdelay=90\2/' /etc/default/grub
 update-grub
